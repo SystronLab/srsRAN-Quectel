@@ -1,5 +1,7 @@
 # srsRAN-Quectel
 
+Guide to setup srsRAN with USRP x310 and Quectel RMU500-EK
+
 ## Connect the modem with the type c cord
 
 ```bash
