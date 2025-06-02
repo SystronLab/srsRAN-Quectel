@@ -126,3 +126,18 @@ AT+CGPADDR=1
 ```bash
 AT+QPING=1,"8.8.8.8"
 ```
+
+# Using the script
+
+You can use the script to automatically connect the 5g modem to the srsRAN.
+Make it executable using
+
+```bash
+chmod +x ./connect5g.sh
+```
+
+then run it with
+
+```bash
+sudo ./connect5g.sh
+```
