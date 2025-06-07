@@ -51,11 +51,21 @@ MODEM_INFO=$(mmcli -m "$MODEM_INDEX" 2>/dev/null)
 echo "[DEBUG] Output from 'mmcli -m $MODEM_INDEX':"
 echo "$MODEM_INFO"
 
-echo "[DEBUG] Found AT ports:"
-echo "$MODEM_INFO" | grep -o 'ttyUSB[0-9]\+ (at)'
-
-# Use first AT port found
+# Try to extract AT port labeled as (at)
 AT_PORT=$(echo "$MODEM_INFO" | grep -o 'ttyUSB[0-9]\+ (at)' | head -n 1 | awk '{print $1}')
+
+if [[ -z "$AT_PORT" ]]; then
+  echo "[WARN] AT port not labeled. Trying fallback detection..."
+
+  # Try fallback logic: Assume ttyUSB2 or ttyUSB3 is AT port (Quectel pattern)
+  for fallback_port in /dev/ttyUSB2 /dev/ttyUSB3; do
+    if [[ -e "$fallback_port" ]]; then
+      AT_PORT=$(basename "$fallback_port")
+      echo "[INFO] Using fallback AT port: $AT_PORT"
+      break
+    fi
+  done
+fi
 
 if [[ -z "$AT_PORT" ]]; then
   echo "[ERROR] AT port not found for modem $MODEM_INDEX."
@@ -63,7 +73,7 @@ if [[ -z "$AT_PORT" ]]; then
 fi
 
 AT_PORT="/dev/$AT_PORT"
-echo "[INFO] Using AT port: $AT_PORT"
+echo "[INFO] Final AT port selected: $AT_PORT"
 echo "--------------------------------------------------"
 
 echo "[STEP 4] Checking readiness of $AT_PORT..."
