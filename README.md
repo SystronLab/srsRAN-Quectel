@@ -136,6 +136,36 @@ Make it executable using
 chmod +x ./connect5g.sh
 ```
 
+Check the data interface
+AT+QCFG="data_interface"
+
+Set it to usb
+AT+QCFG="data_interface",0,0
+
+
+AT+QCFG="usbnet"
+
+AT+QCFG="usbnet",2
+
+
+Do ip link
+you'll see wwan0 as an interface
+
+
+List all connected modem
+sudo mmcli -L
+
+take note of modem number i.e. in my case its 0. Then, I run following commands
+
+sudo mmcli -m 0 -e
+sudo mmcli -m 0 --simple-connect="apn=srsapn"
+
+
+sudo ip link set wwan0 up
+sudo ip a add 10.45.0.2/16 dev wwan0
+
+sudo iptables -F
+
 then run it with
 
 ```bash
