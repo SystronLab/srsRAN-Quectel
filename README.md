@@ -143,5 +143,6 @@ Ping Test
 AT+QPING=1,"8.8.8.8"
 ```
 
-Once the connection is successful and you see wwan0 as an interface,
-You're all set to run the script in the robot folder on boot.
+Once the connection is successful and you see wwan0 as an interface, You're all set to run the script in the robot folder on boot.
+
+If the wwan interface is still not visible then check if you have cdc-wdm and qmi_wwan modules using `modprobe`
