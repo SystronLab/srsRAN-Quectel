@@ -17,6 +17,12 @@ After the build is successful, run the udp client which sends the controller's c
 ```bash
 ./gamepad_interface -p 9020 -i 10.45.0.2
 ```
+If there is a joystick detection issue, run
+
+```bash
+ls /dev/input/by-id
+```
+verify that the event-joystic that shows up is the same in the code.
 
 ## Robot / Client
 
