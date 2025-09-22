@@ -40,7 +40,9 @@
 #define DEFAULT_IP_ADDR "127.0.0.1"
 #define DEMO_SEND_INTERVAL 3 // secs
 //#define GAMEPAD_DRIVER_DEVICE_NAME "usb-D_TGZ_Controller_3E529610-event-joystick"
-#define GAMEPAD_DRIVER_DEVICE_NAME "usb-D_TGZ_Controller_3E5296C0-event-joystick"
+//#define GAMEPAD_DRIVER_DEVICE_NAME "usb-D_TGZ_Controller_3E5296C0-event-joystick"
+#define GAMEPAD_DRIVER_DEVICE_NAME "usb-D_TGZ_Controller_3E529630-event-joystick"
+
 #define GAMEPAD_DRIVER_LOC "/dev/input/by-id/"
 
 
@@ -57,6 +59,7 @@ typedef struct
 } gamepadStruct, *gamepadStructptr;
 
 int gamepad = -1;
+char gamepadDevNode[50];
 char gamepadDevname[] = GAMEPAD_DRIVER_DEVICE_NAME;
 char gamepadDevLoc[] = GAMEPAD_DRIVER_LOC;
 char gamepadDataJson[GAMEPAD_JSON_PKTSIZE];
@@ -161,7 +164,7 @@ int main(int argc, char **argv)
 	char mode[5];
 	strncpy(mode,"norm",4);
 	strcpy(robot_ip_addr_str,DEFAULT_IP_ADDR);
-	while((opt = getopt(argc, argv, "hi:p:m:")) != -1)
+	while((opt = getopt(argc, argv, "hi:p:m:g:")) != -1)
 	{
 	   switch (opt)
 	   {
@@ -170,8 +173,9 @@ int main(int argc, char **argv)
 	    	 printf("Sends gamepad control signals to robot over 5G network.\n\n");
 	    	 printf("  -i: robot ip address - format xxx.xxx.xxx.xxx\n");
 	    	 printf("  -p: robot port number integer\n\n");
-			 printf("  -h: help\n");
-			 printf("  -m: set mode to norm (default) or demo\n");
+		 printf("  -h: help\n");
+		 printf("  -g: gamepad device node\n");
+		 printf("  -m: set mode to norm (default) or demo\n");
 	    	 printf("Example:\ngamepad_test -i 192.100.0.1 -p 99700\n\n");
 	    	 exit(EXIT_SUCCESS);
 	    	 break;
@@ -180,6 +184,10 @@ int main(int argc, char **argv)
 			 if(strncmp(mode, "demo",4) && strncmp(mode,"norm",4))
 			 	strncpy(mode,"norm",4);
 			break;
+		case 'g':
+	    	 strcpy(gamepadDevNode, optarg);
+	    	 strcpy(gamepadDevname,gamepadDevNode);
+	         break;
 	     case 'i':
 	    	 strcpy(robot_ip_addr_str, optarg);
 	         break;
@@ -191,6 +199,7 @@ int main(int argc, char **argv)
 	    	 exit(EXIT_FAILURE);
 	   }
    }
+
 
    	bzero(&robot_addr, sizeof(struct sockaddr_in));
 	robot_addr.sin_family = AF_INET;
