@@ -39,7 +39,7 @@ sudo systemctl enable ModemManager
 sudo systemctl start ModemManager
 ```
 
-List Modems
+Wait for some time and List Modems. (You might have to keep trying till the modem shows up)
 
 ```bash
 sudo mmcli -L
@@ -59,8 +59,11 @@ sudo mmcli -m 0 | grep ports
 ```
 0 here is the index number identified above. You might have a different index number.
 
+One of these is the AT port
+```bash
+ls /dev/ttyUSB*
+```
 Start AT Console
-
 ```bash
 sudo picocom -b 115200 /dev/ttyUSB2
 ```
