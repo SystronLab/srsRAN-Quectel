@@ -44,6 +44,7 @@ List Modems
 ```bash
 sudo mmcli -L
 ```
+Check index number
 
 Install Picocom
 
@@ -56,6 +57,7 @@ Identify AT Port
 ```bash
 sudo mmcli -m 0 | grep ports
 ```
+0 here is the index number identified above. You might have a different index number.
 
 Start AT Console
 
