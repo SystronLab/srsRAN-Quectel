@@ -160,3 +160,17 @@ AT+QPING=1,"8.8.8.8"
 Once the connection is successful and you see wwan0 as an interface, You're all set to run the script in the robot folder on boot.
 
 If the wwan interface is still not visible then check if you have cdc-wdm and qmi_wwan modules using `modprobe`
+
+If you want to test communication between the Host (gnb) and the receiver (UE). Use the following:
+
+```bash
+sudo mmcli -m "$MODEM_INDEX" -e
+sudo mmcli -m "$MODEM_INDEX" --simple-connect="apn=srsapn"
+
+# Assuming interface is wwan0 and IP is fixed; adjust as needed
+sudo ip link set wwan0 up
+sudo ip addr add 10.45.0.2/16 dev wwan0
+
+sudo iptables -F
+```
+Now you can ping the Host on 10.45.0.1 and the UE on 10.45.0.2 (we have manually assigned the modem's IP address to the reciever machine by ip spoofing)
