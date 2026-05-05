@@ -83,10 +83,10 @@ sudo picocom -b 115200 /dev/ttyUSB2
   ```
   AT+CIMI
   ```
-- Check if the modem sees the network:
+- Check if the modem sees the network (take a couple of mins):
 
   ```
-  AT+COPS?
+  AT+COPS=?
   ```
 
 - Returns APNs:
