@@ -83,7 +83,7 @@ sudo picocom -b 115200 /dev/ttyUSB2
   ```
   AT+CIMI
   ```
-- Currently registered PLMN:
+- Check if the modem sees the network:
 
   ```
   AT+COPS?
