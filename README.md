@@ -73,17 +73,20 @@ sudo picocom -b 115200 /dev/ttyUSB2
   ```
   AT
   ```
-
-- Currently registered PLMN:
+- Check whether SIM is detected:
 
   ```
-  AT+COPS?
+  AT+CPIN?
   ```
-
 - Returns the IMSI:
 
   ```
   AT+CIMI
+  ```
+- Currently registered PLMN:
+
+  ```
+  AT+COPS?
   ```
 
 - Returns APNs:
